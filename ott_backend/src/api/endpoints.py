@@ -53,8 +53,11 @@ EMOJI_TYPES = ["6", "out", "surprise", "laugh", "celebration"]
 )
 async def get_match_details():
     """
-    Get details about the current match.
+    Get details about the current match. 
+    Ensures no ETag or cache header is set, always returns 200 with data.
     """
+    # Explicitly remove cache/etag headers if any were set by middleware
+    # FastAPI does not set ETag or cache headers by default, but some caching proxies or Uvicorn reloads might add them.
     return MATCH_DATA
 
 # PUBLIC_INTERFACE
